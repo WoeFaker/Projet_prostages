@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProstagesController!{% endblock %}
+{% block title %}Stages{% endblock %}
 
 {% block body %}
 <style>
@@ -9,12 +9,17 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-    <h1>{{ "Cette page affichera le descriptif du stage ayant pour identifiant" ~ controller_name }}</h1>
-    This friendly message is coming from:
+    <h1>Stage n°{{ controller_name }} ✅</h1>
+    <h1>{{ "Cette page affichera le descriptif du stage ayant l'identifiant n°" ~ controller_name }}</h1>
+
     <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Temp/symfony/prostages/src/Controller/ProstagesController.php'|file_link(0) }}">src/Controller/ProstagesController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Temp/symfony/prostages/templates/prostages/index.html.twig'|file_link(0) }}">templates/prostages/index.html.twig</a></code></li>
+    Titre : <br>
+    Nom : <br>
+    Activité : <br>
+    Adresse : <br>
+    Description : <br>
+    Fromation requise : <br>
+    Mail : <br>
     </ul>
 </div>
 {% endblock %}
