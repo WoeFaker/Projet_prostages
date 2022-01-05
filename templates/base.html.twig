@@ -16,9 +16,31 @@
         {% endblock %}
     </head>
     <body>
-        {% block top %}<center><h1>Prostages</h1></center>{% endblock %}
-        {% block menu %}---------MENU---------{% endblock %}
+        {% block top %}<center><h1><div class="alert alert-dark" role="alert">
+  Prostages
+</div></h1></center>{% endblock %}
+        {% block navigation %}<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-2 offset-md-3 col-sm-6">
+			<ul class="nav">
+				<li class="nav-item">
+					<a class="nav-link active" href="/entreprises">Filtrer par entreprises</a>
+				</li>
+			</ul>
+		</div>
+		<div class="col-md-3 offset-md-3 col-sm-6">
+			<ul class="nav">
+				<li class="nav-item">
+					<a class="nav-link active" href="/formations">Filtrer par formation</a>
+				</li>
+				
+			</ul>
+		</div>
+	</div>
+</div>{% endblock %}
         {% block body %}{% endblock %}
-        {% block footer %}---------PIED DE PAGE ---------{% endblock %}
+        {% block footer %}<div class="alert alert-dark" role="alert">
+  <h5><center>This website is offered to you by el bastos co-founder of mimoune time industries.<center></h5>
+</div>{% endblock %}
     </body>
 </html>
