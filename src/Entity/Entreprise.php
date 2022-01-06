@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EntrepriseRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,38 +20,47 @@ class Entreprise
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $nom;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $adresse;
-
-    /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=50)
      */
     private $activite;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=150)
      */
-    private $siteWeb;
+    private $adresse;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $nom;
+
+    /**
+     * @ORM\Column(type="string", length=150)
+     */
+    private $URLsite;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Stage::class, mappedBy="entreprise")
+     */
+    private $stages;
+
+    public function __construct()
+    {
+        $this->stages = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNom(): ?string
+    public function getActivite(): ?string
     {
-        return $this->nom;
+        return $this->activite;
     }
-
-    public function setNom(string $nom): self
+    public function setActivite(string $activite): self
     {
-        $this->nom = $nom;
+        $this->activite = $activite;
 
         return $this;
     }
@@ -66,26 +77,56 @@ class Entreprise
         return $this;
     }
 
-    public function getActivite(): ?string
+    public function getNom(): ?string
     {
-        return $this->activite;
+        return $this->nom;
     }
 
-    public function setActivite(string $activite): self
+    public function setNom(string $nom): self
     {
-        $this->activite = $activite;
+        $this->nom = $nom;
 
         return $this;
     }
 
-    public function getSiteWeb(): ?string
+    public function getURLsite(): ?string
     {
-        return $this->siteWeb;
+        return $this->URLsite;
     }
 
-    public function setSiteWeb(string $siteWeb): self
+    public function setURLsite(string $URLsite): self
     {
-        $this->siteWeb = $siteWeb;
+        $this->URLsite = $URLsite;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Stage[]
+     */
+    public function getStages(): Collection
+    {
+        return $this->stages;
+    }
+
+    public function addStage(Stage $stage): self
+    {
+        if (!$this->stages->contains($stage)) {
+            $this->stages[] = $stage;
+            $stage->setEntreprise($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStage(Stage $stage): self
+    {
+        if ($this->stages->removeElement($stage)) {
+            // set the owning side to null (unless already changed)
+            if ($stage->getEntreprise() === $this) {
+                $stage->setEntreprise(null);
+            }
+        }
 
         return $this;
     }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\FormationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,18 +20,40 @@ class Formation
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=15)
-     */
-    private $nomCourt;
-
-    /**
      * @ORM\Column(type="string", length=30)
      */
     private $nomLong;
 
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $nomCourt;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Stage::class, mappedBy="formation")
+     */
+    private $stages;
+
+    public function __construct()
+    {
+        $this->stages = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getNomLong(): ?string
+    {
+        return $this->nomLong;
+    }
+
+    public function setNomLong(string $nomLong): self
+    {
+        $this->nomLong = $nomLong;
+
+        return $this;
     }
 
     public function getNomCourt(): ?string
@@ -44,14 +68,29 @@ class Formation
         return $this;
     }
 
-    public function getNomLong(): ?string
+    /**
+     * @return Collection|Stage[]
+     */
+    public function getStages(): Collection
     {
-        return $this->nomLong;
+        return $this->stages;
     }
 
-    public function setNomLong(string $nomLong): self
+    public function addStage(Stage $stage): self
     {
-        $this->nomLong = $nomLong;
+        if (!$this->stages->contains($stage)) {
+            $this->stages[] = $stage;
+            $stage->addFormation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStage(Stage $stage): self
+    {
+        if ($this->stages->removeElement($stage)) {
+            $stage->removeFormation($this);
+        }
 
         return $this;
     }
