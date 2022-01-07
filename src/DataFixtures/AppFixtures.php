@@ -12,6 +12,41 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
+        //Création d'un générateur de données Faker 
+        $faker = \Faker\Factory::create('fr_FR');
+
+        $tableau = array("","","","","");
+        
+        $nomGenereE = array("Kcorp","Ankama","Facebook","Amazon","JVC");
+        for ($i = 0; $i < 5; $i++ ){
+            $entreprise = new Entreprise();
+            $entreprise->setActivite($faker->realText($maxNbChars = 50, $indexSize = 2));        
+            $entreprise->setAdresse($faker->address());
+            $entreprise->setNom($nomGenereE[$i]);
+            $entreprise->setURLsite("www." . $nomGenereE[$i] . ".com");
+            $manager->persist($entreprise);
+            $tableau[$i] = $entreprise;
+        }
+        
+        $nomGenereFL = array("BTS SYSTEME RESEAU","BTS UBER EAT","BTS MUSIQUE","BTS HESS","BTS ELECTRONIQUE");
+        $nomGenereFC = array("BTS-SR","BTS-UE","BTS-M","BTS-H","BTS-ELEC");
+        for ($i = 0; $i < 5; $i++ ){
+            $formation = new Formation();
+            $formation->setNomLong($nomGenereFL[$i]);
+            $formation->setNomCourt($nomGenereFC[$i]);
+            $manager->persist($formation);
+        }
+
+        $titreGenereS = array("Stage de jeux video","Stage de farm dofus","Stage de gestion de données","Stages de colis","Stages de moderation");
+        for ($i = 0; $i < 5; $i++ ){
+            $stage = new Stage();
+            $stage->setEntreprise($tableau[$i]);  
+            $stage->setDescMissions($faker->realText($maxNbChars = 200, $indexSize = 2));
+            $stage->setTitre($titreGenereS[$i]);
+            $stage->setEmailContact("stage".$i. "@.com");
+            $manager->persist($stage);
+        }
+
         $entreprise1 = new Entreprise();
         $entreprise1->setActivite("Création de jeux videos");
         $entreprise1->setAdresse("145 rue yves le coz Paris 78000");
@@ -27,7 +62,7 @@ class AppFixtures extends Fixture
         $manager->persist($entreprise2);
 
         $entreprise3 = new Entreprise();
-        $entreprise3->setActivite("développement web et materiel info");
+        $entreprise3->setActivite($faker->realText($maxNbChars =50, $indexSize = 2));
         $entreprise3->setAdresse("17 AV DE L EUROPE BOIS-COLOMBES 92270");
         $entreprise3->setNom("IBM");
         $entreprise3->setUrlSite("https://www.ibm.com/fr-fr");
