@@ -15,8 +15,9 @@ class AppFixtures extends Fixture
         //Création d'un générateur de données Faker 
         $faker = \Faker\Factory::create('fr_FR');
 
-        $tableau = array("","","","","");
-        
+        $tableauLienStageEntreprise = array("","","","","");
+        $tableauLienStageFormation = array("","","","","");
+
         $nomGenereE = array("Kcorp","Ankama","Facebook","Amazon","JVC");
         for ($i = 0; $i < 5; $i++ ){
             $entreprise = new Entreprise();
@@ -25,7 +26,7 @@ class AppFixtures extends Fixture
             $entreprise->setNom($nomGenereE[$i]);
             $entreprise->setURLsite("www." . $nomGenereE[$i] . ".com");
             $manager->persist($entreprise);
-            $tableau[$i] = $entreprise;
+            $tableauLienStageEntreprise[$i] = $entreprise;
         }
         
         $nomGenereFL = array("BTS SYSTEME RESEAU","BTS UBER EAT","BTS MUSIQUE","BTS HESS","BTS ELECTRONIQUE");
@@ -34,16 +35,18 @@ class AppFixtures extends Fixture
             $formation = new Formation();
             $formation->setNomLong($nomGenereFL[$i]);
             $formation->setNomCourt($nomGenereFC[$i]);
+            $tableauLienStageFormation[$i] = $formation;
             $manager->persist($formation);
         }
 
         $titreGenereS = array("Stage de jeux video","Stage de farm dofus","Stage de gestion de données","Stages de colis","Stages de moderation");
         for ($i = 0; $i < 5; $i++ ){
             $stage = new Stage();
-            $stage->setEntreprise($tableau[$i]);  
+            $stage->setEntreprise($tableauLienStageEntreprise[$i]);  
             $stage->setDescMissions($faker->realText($maxNbChars = 200, $indexSize = 2));
             $stage->setTitre($titreGenereS[$i]);
             $stage->setEmailContact("stage".$i. "@.com");
+            $stage->addFormation($tableauLienStageFormation[$i]);
             $manager->persist($stage);
         }
 
@@ -88,6 +91,7 @@ class AppFixtures extends Fixture
         $stage1->setDescMissions("vous allez devoir coder un jeu en java en utilisant des ressources fournies pasr l'entreprise.");
         $stage1->setEmailContact("blizzardstage@gmail.com");
         $stage1->setEntreprise($entreprise1);
+        $stage->addFormation($formation1);
         $manager->persist($stage1);
 
         $stage2 = new Stage();
@@ -95,6 +99,7 @@ class AppFixtures extends Fixture
         $stage2->setDescMissions("vous allez effectuer un programme dans une equipe projet visant a gerer l'aspect communication du jeu the escapist.");
         $stage2->setEmailContact("epicgamesstage@gmail.com");
         $stage2->setEntreprise($entreprise2);
+        $stage->addFormation($formation2);
         $manager->persist($stage2);
 
         $stage3 = new Stage();
@@ -102,6 +107,7 @@ class AppFixtures extends Fixture
         $stage3->setDescMissions("vous allez faire un stage de php visant a developper une application pour gerer les annuaire de notre entreprise");
         $stage3->setEmailContact("ibmstage@gmail.com");
         $stage3->setEntreprise($entreprise3);
+        $stage->addFormation($formation3);
         $manager->persist($stage3);
 
 
