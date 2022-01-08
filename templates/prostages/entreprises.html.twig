@@ -3,19 +3,25 @@
 
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    </style>
 
-<div class="example-wrapper">
-    <h1>Entreprises</h1>
-    <h2>Cette page affichera la liste des entreprises proposant un stage</h2>
-
-    <ul>
-    <h3>Ubisoft</h3> <br>
-    <h3>Ankama</h3> <br>
-    <h3>RIOT</h3> 
-    </ul>
-</div>
+    <div class="example-wrapper">
+        <h1>Entreprises</h1>
+        <h2>Cette page affichera la liste des entreprises proposant un stage</h2>
+        <div class="card-deck">
+            {% for entrepriseCourant in entreprises %}
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title"><a href="{{path('prostages_entreprise',{id:entrepriseCourant.id})}}">{{entrepriseCourant.nom}}</a></h4>
+                        <h5 class="card-title">{{entrepriseCourant.adresse}}</h5>
+                        <p class="card-text">{{entrepriseCourant.activite}}</p>
+                        <p class="card-text">{{entrepriseCourant.URLsite}}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
